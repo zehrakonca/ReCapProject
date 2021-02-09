@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,12 +20,11 @@ namespace Business.Concrete
 			if (car.DailyPrice > 0)
 			{
 				_carDal.Add(car);
-				Console.WriteLine("{0} nolu, modeli -{1}-, rengi -{2}-, çıkış yılı -{3}- günlük fiyatı -{4}-, açıklaması -{5}- olan araba sisteme eklenmiştir.", car.CarID, car.BrandID, car.ColorID, car.ModelYear, car.DailyPrice, car.Description);
+				Console.WriteLine("Araç sisteme eklenmiştir.");
 			}
 			else
 			{
 				Console.WriteLine("Girilen günlük fiyat 0 TL 'den fazla olmalıdır. Tekrar deneyin.");
-				car.DailyPrice = Convert.ToInt32(Console.ReadLine());
 			}
 		}
 
@@ -64,17 +64,21 @@ namespace Business.Concrete
 			return _carDal.GetAll();
 		}
 
+		public List<CarDetailDto> GetCarDetails()
+		{
+			return _carDal.GetCarDetails();
+		}
+
 		public void Update(Car car)
 		{
 			if (car.DailyPrice > 0)
 			{
-				_carDal.Add(car);
-				Console.WriteLine("{0} nolu, modeli -{1}-, rengi -{2}-, çıkış yılı -{3}- günlük fiyatı -{4}-, açıklaması -{5}- olan araba güncellenmiştir.", car.CarID, car.BrandID, car.ColorID, car.ModelYear, car.DailyPrice, car.Description);
+				_carDal.Update(car);
+				Console.WriteLine("Araç bilgileri güncellenmiştir.");
 			}
 			else
 			{
 				Console.WriteLine("Girilen günlük fiyat 0 TL 'den fazla olmalıdır. Tekrar deneyin.");
-				car.DailyPrice = Convert.ToInt32(Console.ReadLine());
 			}
 		}
 	}
