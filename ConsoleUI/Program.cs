@@ -19,6 +19,7 @@ namespace ConsoleUI
 			Console.WriteLine("Araç kiralama sistemine hoşgeldin.\n" +
 							  "Bu sistemde yapabileğin işlemler aşağıda sıralanmıştır.\n" +
 							  "Seçeceğin işlem için gösterilen rakamı tuşlarsan, işleme ulaşabilirsin.");
+
 			while (true)
 			{
 				Welcome();
@@ -74,10 +75,13 @@ namespace ConsoleUI
 							decimal dailyPrice1 = Convert.ToDecimal(Console.ReadLine());
 							Console.WriteLine("Maksimum günlük kullanım ücretini giriniz : ");
 							decimal dailyPrice2 = Convert.ToDecimal(Console.ReadLine());
-							Console.WriteLine("Belirttiğiniz ücret aralığındaki arabalar : \n\tAraç Rengi\tModel\tÇıkış Yılı\tGünlük Fiyat\tAçıklama ");
+							Console.WriteLine("Belirttiğiniz ücret aralığındaki arabalar : \n\tAraç Rengi\tModel\t" +
+											  "Çıkış Yılı\tGünlük Fiyat\tAçıklama ");
 							foreach (var cars in carManager.GetByDailyPrice(dailyPrice1, dailyPrice2))
 							{
-								Console.WriteLine($"{colorManager.GetById(cars.ColorID).ColorName}\t{brandManager.GetById(cars.BrandID).BrandName}\t{cars.ModelYear}\t\t{cars.DailyPrice}\t\t{cars.Description}");
+								Console.WriteLine($"{colorManager.GetById(cars.ColorID).ColorName}\t" +
+											      $"{brandManager.GetById(cars.BrandID).BrandName}\t{cars.ModelYear}\t" +
+												  $"\t{cars.DailyPrice}\t\t{cars.Description}");
 							}
 							break;
 
@@ -105,7 +109,11 @@ namespace ConsoleUI
 							string description = Console.ReadLine();
 							carManager.Add(new Car
 							{
-								 BrandID = brandId, ColorID = colorId, ModelYear = modelYear, DailyPrice = dailyPrice, Description = description
+								 BrandID = brandId,
+								 ColorID = colorId,
+								 ModelYear = modelYear,
+								 DailyPrice = dailyPrice,
+								 Description = description
 							});
 							CarDetail();
 
@@ -133,7 +141,15 @@ namespace ConsoleUI
 							decimal dailyPrice = Convert.ToDecimal(Console.ReadLine());
 							Console.WriteLine("Araç açıklamasını giriniz:");
 							string description = Console.ReadLine();
-							carManager.Update(new Car { CarID = carId,BrandID = brandId, ColorID = colorId, ModelYear = modelYear, DailyPrice = dailyPrice, Description = description });
+							carManager.Update(new Car
+							{
+								CarID = carId,
+								BrandID = brandId,
+								ColorID = colorId,
+								ModelYear = modelYear,
+								DailyPrice = dailyPrice,
+								Description = description
+							});
 							CarDetail();
 							break;
 						}
@@ -194,14 +210,14 @@ namespace ConsoleUI
 		{
 			Console.WriteLine("__________________________________________________________________");
 			Console.WriteLine(" 1 - Sistemdeki bütün araçları listele (1)\n" +
-										  " 2 - Sistemdeki belirtilen bir renkteki araçları listele (2)\n" +
-										  " 3 - Sistemdeki belirtilen modeldeki araçları listele (3)\n" +
-										  " 4 - Belirtilen ücret aralığındaki araçları listele (4)\n" +
-										  " 5 - Sisteme yeni araç ekle (5)\n" +
-										  " 6 - Güncelleme işlemleri (6)\n" +
-										  " 7 - Silme işlemleri (7)\n"+
-										  " 8 - Sisteme yeni model ekle (8)\n"+
-										  " 9 - Sisteme yeni renk ekle (9)");
+							  " 2 - Sistemdeki belirtilen bir renkteki araçları listele (2)\n" +
+						      " 3 - Sistemdeki belirtilen modeldeki araçları listele (3)\n" +
+							  " 4 - Belirtilen ücret aralığındaki araçları listele (4)\n" +
+							  " 5 - Sisteme yeni araç ekle (5)\n" +
+							  " 6 - Güncelleme işlemleri (6)\n" +
+							  " 7 - Silme işlemleri (7)\n"+
+							  " 8 - Sisteme yeni renk ekle (8)\n"+
+							  " 9 - Sisteme yeni marka ekle (9)");
 			Console.WriteLine("__________________________________________________________________");
 		}
 		private static void GetColor()
@@ -229,7 +245,8 @@ namespace ConsoleUI
 			Console.WriteLine("Sistemdeki bütün arabalar: \nId\tAraç Rengi\tModel\t\tÇıkış Yılı\tGünlük Fiyat\tAçıklama");
 			foreach (var car in carManager.GetCarDetails())
 			{
-				Console.WriteLine($"{car.CarID}\t{car.ColorName}\t{car.BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Description}");
+				Console.WriteLine($"{car.CarID}\t{car.ColorName}\t{car.BrandName}\t\t" +
+					              $"{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Description}");
 			}
 		}
 	}
