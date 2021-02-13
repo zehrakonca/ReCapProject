@@ -1,4 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results.Abstact;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -15,70 +19,70 @@ namespace Business.Concrete
 		{
 			_carDal = carDal;
 		}
-		public void Add(Car car)
+		public IResult Add(Car car)
 		{
 			if (car.DailyPrice > 0)
 			{
 				_carDal.Add(car);
-				Console.WriteLine("Araç sisteme eklenmiştir.");
+				return new SuccessResult(Messages.CarAdded);
 			}
 			else
 			{
-				Console.WriteLine("Girilen günlük fiyat 0 TL 'den fazla olmalıdır. Tekrar deneyin.");
+				return new ErrorResult(Messages.cantDailyPrice);
 			}
 		}
 
-		public void Delete(Car car)
+		public IResult Delete(Car car)
 		{
 			_carDal.Delete(car);
-			Console.WriteLine("Araba silindi.");
+			return new Result(true, "araba silindi.");
 		}
 
-		public List<Car> GetAllByBrandID(int brandID)
+		public IDataResult<List<Car>> GetAllByBrandID(int brandID)
 		{
-			return _carDal.GetAll(c => c.BrandID == brandID);
+			return new DataResult<List<Car>>(_carDal.GetAll(c => c.BrandID == brandID),true);
 		}
 
-		public List<Car> GetAllByColorID(int colorID)
+		public IDataResult<List<Car>> GetAllByColorID(int colorID)
 		{
-			return _carDal.GetAll(c => c.ColorID == colorID);
+			return new DataResult<List<Car>>(_carDal.GetAll(c => c.ColorID == colorID), true);
 		}
 
-		public List<Car> GetByDailyPrice(decimal min, decimal max)
+		public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
 		{
-			return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+			return new DataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max), true);
 		}
 
-		public Car GetByID(int id)
+		public IDataResult<Car> GetByID(int id)
 		{
-			return _carDal.Get(c => c.CarID == id);
+			return new DataResult<Car>(_carDal.Get(c => c.CarID == id), true);
 		}
 
-		public List<Car> GetByModelYear(int year)
+		public IDataResult<List<Car>> GetByModelYear(int year)
 		{
-			return _carDal.GetAll(c => c.ModelYear == year);
+			return new DataResult<List<Car>>(_carDal.GetAll(c => c.ModelYear == year), true);
 		}
 
-		public List<Car> GetCar()
+		public IDataResult<List<Car>> GetCar()
 		{
-			return _carDal.GetAll();
+			return new DataResult<List<Car>>(_carDal.GetAll(), true);
 		}
 
-		public List<CarDetailDto> GetCarDetails()
+		public IDataResult<List<CarDetailDto>> GetCarDetails()
 		{
-			return _carDal.GetCarDetails();
+			return new DataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), true);
 		}
 
-		public void Update(Car car)
+		public IResult Update(Car car)
 		{
 			if (car.DailyPrice > 0)
 			{
 				_carDal.Update(car);
-				Console.WriteLine("Araç bilgileri güncellenmiştir.");
+				return new SuccessResult(Messages.CarUpdated);
 			}
 			else
 			{
-				Console.WriteLine("Girilen günlük fiyat 0 TL 'den fazla olmalıdır. Tekrar deneyin.");
+				return new ErrorResult(Messages.cantDailyPrice);
 			}
 		}
 	}

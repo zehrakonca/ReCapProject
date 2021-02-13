@@ -1,4 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results.Abstact;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,39 +19,47 @@ namespace Business.Concrete
 		{
 			_brandDal = brandDal;
 		}
-		public void Add(Brand brand)
+
+		public IResult Add(Brand brand)
 		{
-			if (brand.BrandName.Length > 2)
+			if (brand.BrandName.Length>2)
 			{
 				_brandDal.Add(brand);
-				Console.WriteLine(brand.BrandName + " modeli sisteme eklendi.");
+				return new SuccessResult(Messages.BrandAdded);
 			}
 			else
 			{
-				Console.WriteLine("Model ismi en az iki harf içermelidir.");
+				return new ErrorResult(Messages.cantBrand2char);
 			}
 		}
 
-		public void Delete(Brand brand)
+		public IResult Delete(Brand brand)
 		{
 			_brandDal.Delete(brand);
-			Console.WriteLine(brand.BrandName + "araba modeli silindi.");
+			return new SuccessResult(Messages.BrandDelete);
 		}
 
-		public List<Brand> GetAll()
+		public IDataResult<List<Brand>> GetAll()
 		{
-			return _brandDal.GetAll();
+			return new DataResult<List<Brand>>(_brandDal.GetAll(), true);
 		}
 
-		public Brand GetById(int brandID)
+		public IDataResult<Brand> GetById(int brandID)
 		{
-			return _brandDal.Get(b => b.BrandID == brandID);
+			return new DataResult<Brand>(_brandDal.Get(b => b.BrandID == brandID),true);
 		}
 
-		public void Update(Brand brand)
+		public IResult Update(Brand brand)
 		{
-			_brandDal.Update(brand);
-			Console.WriteLine(brand.BrandName + "modeli güncellendi.");
+			if (brand.BrandName.Length > 2)
+			{
+				_brandDal.Update(brand);
+				return new SuccessResult();
+			}
+			else
+			{
+				return new ErrorResult(Messages.cantBrand2char);
+			}
 		}
 	}
 }

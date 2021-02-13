@@ -1,4 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results.Abstact;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -15,32 +19,47 @@ namespace Business.Concrete
 		{
 			_colorDal = colorDal;
 		}
-		public void Add(Color color)
+
+		public IResult Add(Color color)
 		{
-			_colorDal.Add(color);
-			Console.WriteLine(color.ColorName + " araba rengi eklendi.");
+			if (color.ColorName.Length > 2)
+			{
+				_colorDal.Add(color);
+				return new SuccessResult(Messages.ColorAdded);
+			}
+			else
+			{
+				return new ErrorResult(Messages.cantColor2char);
+			}
 		}
 
-		public void Delete(Color color)
+		public IResult Delete(Color color)
 		{
 			_colorDal.Delete(color);
-			Console.WriteLine(color.ColorName + " araba rengi silindi.");
+			return new SuccessResult(Messages.ColorDeleted);
 		}
 
-		public List<Color> GetAll()
+		public IDataResult<List<Color>> GetAll()
 		{
-			return _colorDal.GetAll();
+			return new DataResult<List<Color>>(_colorDal.GetAll(), true);
 		}
 
-		public Color GetById(int colorID)
+		public IDataResult<Color> GetById(int colorID)
 		{
-			return _colorDal.Get(c => c.ColorID == colorID);
+			return new DataResult<Color>(_colorDal.Get(c => c.ColorID == colorID), true);
 		}
 
-		public void Update(Color color)
+		public IResult Update(Color color)
 		{
-			_colorDal.Update(color);
-			Console.WriteLine(color.ColorName + " araba rengi silindi.");
+			if (color.ColorName.Length > 2)
+			{
+				_colorDal.Update(color);
+				return new SuccessResult();
+			}
+			else
+			{
+				return new ErrorResult(Messages.cantColor2char);
+			}
 		}
 	}
 }
