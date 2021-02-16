@@ -24,6 +24,7 @@ namespace Business.Constants
 		public static string ExceptionMessage = "Bir hata oluştu";
 		public static string ThisCarCannotBeRent = "Bu araç müşteride olduğu için kiralanamaz.";
 		public static string CarHasBeenDelivered = "Araç teslim edilmiştir.";
+		public static string HasBeenListed = "Listelendi.";
 
 	}
 }

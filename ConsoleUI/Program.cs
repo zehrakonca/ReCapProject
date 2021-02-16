@@ -335,7 +335,7 @@ namespace ConsoleUI
 						break;
 				}
 			}
-			Console.ReadLine();
+			//Console.ReadLine();
 		}
 		private static void Welcome()
 		{
