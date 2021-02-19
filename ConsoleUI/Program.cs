@@ -273,21 +273,16 @@ namespace ConsoleUI
 						{
 							CarDetail();
 							Console.WriteLine("Kiralanmak istenen aracın ID'sini giriniz : ");
-							rental.CarID = Convert.ToInt32(Console.ReadLine());
-							if (rental.RentDate == Convert.ToDateTime(null))
+							int carID = Convert.ToInt32(Console.ReadLine());
+							CustomerDetail();
+						    Console.WriteLine("Kiralamak isteyen müşterinin IDsini giriniz: ");
+							int customerID = Convert.ToInt32(Console.ReadLine());
+							rentalManager.Add(new Rental
 							{
-								Console.WriteLine(Messages.ThisCarCannotBeRent);
-							}
-							else
-							{
-								CustomerDetail();
-								Console.WriteLine("Kiralamak isteyen müşterinin IDsini giriniz: ");
-								rental.CustomerID = Convert.ToInt32(Console.ReadLine());
-								rental.RentDate = DateTime.Now;
-								rental.ReturnDate = Convert.ToDateTime(null);
-								Console.WriteLine(rentalManager.Add(rental).Message);
-							}
-							
+								 CustomerID = customerID,
+								 CarID = carID,
+								 RentDate = DateTime.Now
+							});
 						}
 						catch
 						{
@@ -309,11 +304,15 @@ namespace ConsoleUI
 						{
 							RentDetail();
 							Console.WriteLine("Teslim alınacak aracın ID'sini giriniz: ");
-							rental.CarID= Convert.ToInt32(Console.ReadLine());
+							int carID= Convert.ToInt32(Console.ReadLine());
 							Console.WriteLine("Teslim alınacak müşterinin ID'sini giriniz:");
-							rental.CustomerID = Convert.ToInt32(Console.ReadLine());
-							rental.ReturnDate = DateTime.Now;
-							Console.WriteLine(rentalManager.Update(rental).Message);
+							int customerID = Convert.ToInt32(Console.ReadLine());
+							rentalManager.Update(new Rental
+							{
+								CarID = carID,
+								CustomerID = customerID,
+								ReturnDate = DateTime.Now
+							}) ;
 							Console.WriteLine(Messages.CarUpdated);
 							Console.WriteLine(Messages.CarHasBeenDelivered);
 						}
@@ -372,7 +371,7 @@ namespace ConsoleUI
 			CarManager carManager = new CarManager(new EfCarDal());
 			var result = carManager.GetCarDetails();
 			Console.WriteLine("Sistemdeki bütün arabalar: \nId\tAraç Rengi\tModel\t\tÇıkış Yılı\tGünlük Fiyat\tAçıklama");
-				foreach (var car in result.Data)
+				foreach (Entities.DTOs.CarDetailDto car in result.Data)
 				{
 					Console.WriteLine($"{car.CarID}\t{car.ColorName}\t{car.BrandName}\t\t" +
 									  $"{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Description}");

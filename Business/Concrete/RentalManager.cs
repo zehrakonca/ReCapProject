@@ -37,17 +37,17 @@ namespace Business.Concrete
 
 		public IDataResult<Rental> GetByID(int id)
 		{
-			return new DataResult<Rental>(_rentDal.Get(r => r.RentalID == id),true);
+			return new SuccessDataResult<Rental>(_rentDal.Get(r => r.RentalID == id));
 		}
 
 		public IDataResult <List<CarRentDetailDto>> GetRentCarDetails()
 		{
-			return new DataResult<List<CarRentDetailDto>>(_rentDal.GetRentCarDetails(), true);
+			return new SuccessDataResult<List<CarRentDetailDto>>(_rentDal.GetRentCarDetails());
 		}
 
 		public IDataResult<List<Rental>> GetRentCar()
 		{
-			return new DataResult<List<Rental>>(_rentDal.GetAll(), true);
+			return new SuccessDataResult<List<Rental>>(_rentDal.GetAll());
 		}
 
 		[ValidationAspect(typeof(RentalValidator))]
