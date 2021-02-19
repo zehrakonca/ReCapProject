@@ -25,6 +25,8 @@ namespace Business.Constants
 		public static string ThisCarCannotBeRent = "Bu araç müşteride olduğu için kiralanamaz.";
 		public static string CarHasBeenDelivered = "Araç teslim edilmiştir.";
 		public static string HasBeenListed = "Listelendi.";
+		public static string WrongValidationType = "Bu bir doğrulama sınıfı değildir.";
+
 
 	}
 }

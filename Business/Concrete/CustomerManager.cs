@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results.Abstact;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -18,17 +21,12 @@ namespace Business.Concrete
 		{
 			_customerDal = customerDal;
 		}
+
+		[ValidationAspect(typeof(CustomerValidator))]
 		public IResult Add(Customer customer)
 		{
-			if (customer.CompanyName.Length > 3)
-			{
-				_customerDal.Add(customer);
-				return new SuccessResult(Messages.UserAdded);
-			}
-			else
-			{
-				return new ErrorResult(Messages.ExceptionMessage);
-			}
+			_customerDal.Add(customer);
+			return new SuccessResult(Messages.UserAdded);
 		}
 
 		public IResult Delete(Customer customer)
@@ -47,6 +45,7 @@ namespace Business.Concrete
 			return new DataResult<List<Customer>>(_customerDal.GetAll(), true);
 		}
 
+		[ValidationAspect(typeof(CustomerValidator))]
 		public IResult Update(Customer customer)
 		{
 			_customerDal.Update(customer);

@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results.Abstact;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -19,38 +22,33 @@ namespace Business.Concrete
 		{
 			_carDal = carDal;
 		}
+
+		[ValidationAspect(typeof(CarValidator))]
 		public IResult Add(Car car)
 		{
-			if (car.DailyPrice > 0)
-			{
-				_carDal.Add(car);
-				return new SuccessResult(Messages.CarAdded);
-			}
-			else
-			{
-				return new ErrorResult(Messages.cantDailyPrice);
-			}
+			_carDal.Add(car);
+			return new SuccessResult(Messages.CarAdded);
 		}
 
 		public IResult Delete(Car car)
 		{
 			_carDal.Delete(car);
-			return new Result(true, "araba silindi.");
+			return new SuccessResult(Messages.UserDeleted);
 		}
 
 		public IDataResult<List<Car>> GetAllByBrandID(int brandID)
 		{
-			return new DataResult<List<Car>>(_carDal.GetAll(c => c.BrandID == brandID),true);
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandID == brandID), Messages.HasBeenListed);
 		}
 
 		public IDataResult<List<Car>> GetAllByColorID(int colorID)
 		{
-			return new DataResult<List<Car>>(_carDal.GetAll(c => c.ColorID == colorID), true);
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorID == colorID), Messages.HasBeenListed);
 		}
 
 		public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
 		{
-			return new DataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max), true);
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max), Messages.HasBeenListed);
 		}
 
 		public IDataResult<Car> GetByID(int id)
@@ -65,25 +63,20 @@ namespace Business.Concrete
 
 		public IDataResult<List<Car>> GetCar()
 		{
-			return new DataResult<List<Car>>(_carDal.GetAll(), true);
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll());
 		}
 
 		public IDataResult<List<CarDetailDto>> GetCarDetails()
 		{
-			return new DataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), true);
+			return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.HasBeenListed);
 		}
 
+
+		[ValidationAspect(typeof(CarValidator))]
 		public IResult Update(Car car)
 		{
-			if (car.DailyPrice > 0)
-			{
-				_carDal.Update(car);
-				return new SuccessResult(Messages.CarUpdated);
-			}
-			else
-			{
-				return new ErrorResult(Messages.cantDailyPrice);
-			}
+			_carDal.Update(car);
+			return new SuccessResult(Messages.CarUpdated);
 		}
 	}
 }

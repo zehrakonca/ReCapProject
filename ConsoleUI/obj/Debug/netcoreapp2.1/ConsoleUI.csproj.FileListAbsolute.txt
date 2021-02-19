@@ -36,3 +36,4 @@ C:\Users\zehra\source\repos\ReCapProject\ReCapProject\ConsoleUI\bin\Debug\netcor
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\ConsoleUI\bin\Debug\netcoreapp2.1\Entities.pdb
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\ConsoleUI\bin\Debug\netcoreapp2.1\Core.pdb
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\ConsoleUI\obj\Debug\netcoreapp2.1\ConsoleUI.csproj.CopyComplete
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\ConsoleUI\obj\Debug\netcoreapp2.1\ConsoleUI.genruntimeconfig.cache

@@ -115,8 +115,6 @@ namespace ConsoleUI
 							decimal dailyPrice = Convert.ToDecimal(Console.ReadLine());
 							Console.WriteLine("Araç açıklamasını giriniz:");
 							string description = Console.ReadLine();
-							Console.WriteLine("Aracın kiralık durumu: 1 = > Müşteride 2 => Kiralık");
-							int statu = Convert.ToInt32(Console.ReadLine());
 							carManager.Add(new Car
 							{
 								BrandID = brandId,
@@ -275,9 +273,8 @@ namespace ConsoleUI
 						{
 							CarDetail();
 							Console.WriteLine("Kiralanmak istenen aracın ID'sini giriniz : ");
-							int carID = Convert.ToInt32(Console.ReadLine());
-							carID = rental.CarID;
-							if (rental.RentDate == null)
+							rental.CarID = Convert.ToInt32(Console.ReadLine());
+							if (rental.RentDate == Convert.ToDateTime(null))
 							{
 								Console.WriteLine(Messages.ThisCarCannotBeRent);
 							}
@@ -285,16 +282,12 @@ namespace ConsoleUI
 							{
 								CustomerDetail();
 								Console.WriteLine("Kiralamak isteyen müşterinin IDsini giriniz: ");
-								int customerID = Convert.ToInt32(Console.ReadLine());
-								Console.WriteLine("Kiralanmak istenen günü giriniz : (YIL,AY,GÜN şeklinde giriniz.) ");
-								DateTime rentDay = Convert.ToDateTime(Console.ReadLine());
-								rentalManager.Add(new Rental
-								{
-									CarID = carID,
-									CustomerID = customerID,
-									RentDate = DateTime.Now
-								});
+								rental.CustomerID = Convert.ToInt32(Console.ReadLine());
+								rental.RentDate = DateTime.Now;
+								rental.ReturnDate = Convert.ToDateTime(null);
+								Console.WriteLine(rentalManager.Add(rental).Message);
 							}
+							
 						}
 						catch
 						{
@@ -316,15 +309,11 @@ namespace ConsoleUI
 						{
 							RentDetail();
 							Console.WriteLine("Teslim alınacak aracın ID'sini giriniz: ");
-							int carID = Convert.ToInt32(Console.ReadLine());
+							rental.CarID= Convert.ToInt32(Console.ReadLine());
 							Console.WriteLine("Teslim alınacak müşterinin ID'sini giriniz:");
-							int customerID = Convert.ToInt32(Console.ReadLine());
-							rentalManager.Update(new Rental
-							{
-								RentalID = carID,
-								CustomerID = customerID,
-								ReturnDate = DateTime.Now
-							});
+							rental.CustomerID = Convert.ToInt32(Console.ReadLine());
+							rental.ReturnDate = DateTime.Now;
+							Console.WriteLine(rentalManager.Update(rental).Message);
 							Console.WriteLine(Messages.CarUpdated);
 							Console.WriteLine(Messages.CarHasBeenDelivered);
 						}
@@ -403,10 +392,10 @@ namespace ConsoleUI
 		{
 			CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
 			var result = customerManager.GetCustomer();
-			Console.WriteLine("Sistemdeki kayıtlı müşteriler : \nMüşteri Numarası\tKullanıcı ID\tŞirket Adı");
+			Console.WriteLine("Sistemdeki kayıtlı müşteriler : \nMüşteri Numarası\tKŞirket Adı");
 			foreach (var customer in result.Data)
 			{
-				Console.WriteLine($"{customer.CustomerID}\t{customer.UserID}\t{customer.CompanyName}");
+				Console.WriteLine($"{customer.CustomerID}\t{customer.CompanyName}");
 			}
 		}
 		private static void RentDetail()

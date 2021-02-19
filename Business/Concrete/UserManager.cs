@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results.Abstact;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -19,18 +22,12 @@ namespace Business.Concrete
 		{
 			_userDal = userDal;
 		}
+
+		[ValidationAspect(typeof(UserValidator))]
 		public IResult Add(User user)
 		{
-			if (user.UserName.Length > 1 || user.UserSurname.Length>1 || user.UserMail.Length >7 || user.UserTelephone.Length > 10)
-			{
-				_userDal.Add(user);
-				return new SuccessResult(Messages.UserAdded);
-			}
-			else
-			{
-				
-				return new ErrorResult(Messages.UserException);
-			}
+			_userDal.Add(user);
+			return new SuccessResult(Messages.UserAdded);
 		}
 		public IResult Delete(User user)
 		{
@@ -48,17 +45,11 @@ namespace Business.Concrete
 			return new DataResult<User>(_userDal.Get(u => u.UserID == userID), true);
 		}
 
+		[ValidationAspect(typeof(UserValidator))]
 		public IResult Update(User user)
 		{
-			if (user.UserName.Length > 1 || user.UserSurname.Length > 1 || user.UserMail.Length > 7 || user.UserTelephone.Length > 10)
-			{
-				_userDal.Update(user);
-				return new SuccessResult(Messages.UserUpdated);
-			}
-			else
-			{
-				return new ErrorResult(Messages.UserException);
-			}
+			_userDal.Update(user);
+			return new SuccessResult(Messages.UserUpdated);
 		}
 	}
 }

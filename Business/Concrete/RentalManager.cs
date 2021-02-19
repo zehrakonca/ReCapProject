@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results.Abstact;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -18,6 +21,8 @@ namespace Business.Concrete
 		{
 			_rentDal = rentDal;
 		}
+
+		[ValidationAspect(typeof(RentalValidator))]
 		public IResult Add(Rental rent)
 		{
 			_rentDal.Add(rent);
@@ -45,6 +50,7 @@ namespace Business.Concrete
 			return new DataResult<List<Rental>>(_rentDal.GetAll(), true);
 		}
 
+		[ValidationAspect(typeof(RentalValidator))]
 		public IResult Update(Rental rent)
 		{
 			_rentDal.Update(rent);
