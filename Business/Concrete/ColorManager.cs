@@ -1,11 +1,10 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
-using Core.Utilities.Results.Abstact;
-using Core.Utilities.Results.Abstract;
-using Core.Utilities.Results.Concrete;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -22,7 +21,7 @@ namespace Business.Concrete
 		{
 			_colorDal = colorDal;
 		}
-
+		[SecuredOperation("Admin")]
 		[ValidationAspect(typeof(ColorValidator))]
 		public IResult Add(Color color)
 		{
@@ -30,6 +29,7 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.ColorAdded);
 		}
 
+		[SecuredOperation("Admin")]
 		public IResult Delete(Color color)
 		{
 			_colorDal.Delete(color);
@@ -45,7 +45,7 @@ namespace Business.Concrete
 		{
 			return new DataResult<Color>(_colorDal.Get(c => c.ColorID == colorID), true);
 		}
-
+		[SecuredOperation("Admin")]
 		[ValidationAspect(typeof(ColorValidator))]
 		public IResult Update(Color color)
 		{

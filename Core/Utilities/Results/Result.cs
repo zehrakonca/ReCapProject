@@ -1,22 +1,21 @@
-﻿using Core.Utilities.Results.Abstact;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Utilities.Results.Concrete
+namespace Core.Utilities.Results
 {
 	public class Result : IResult
 	{
 		public Result(bool success, string message) : this(success)
 		{
-			success = Success;
-			message = Message;
+			Message = message;
 		}
 		public Result(bool success)
 		{
-			success = Success;
+			Success = success;
 		}
-		public bool Success { get; }
+
+		public bool Success {get;}
 
 		public string Message { get; }
 	}

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -27,6 +29,20 @@ namespace Business.Constants
 		public static string HasBeenListed = "Listelendi.";
 		public static string WrongValidationType = "Bu bir doğrulama sınıfı değildir.";
 
+		public static object FileNotCreated = "Dosya oluşturulamadı.";
 
+		public static string ImagesHasBeenAdded = "Resim kaydedildi, yol oluşturuldu.";
+
+		public static string CantLoadImage = "Sistemde 5 tane resim olduğundan dolayı resim yüklenemez.";
+		public static string ImageAdded = "Resim eklendi.";
+		public static string ImageDeleted = "Resim silindi.";
+		public static string AuthorizationDenied = "Yetkilendirme reddedildi.";
+
+		public static string AccessTokenCreated = "Hesap oluşturuldu.";
+		public static string UserAlreadyExists = "Bu kullanıcı zaten sistemde kayıtlı.";
+		public static string UserNotFound = "Kullanıcı bulunamadı";
+		public static string IncorrectPassword = "Parola yanlış";
+		public static string SuccessfulLogin = "Giriş başarılı";
+		public static string UserRegistered = "Kayıt başarılı";
 	}
 }

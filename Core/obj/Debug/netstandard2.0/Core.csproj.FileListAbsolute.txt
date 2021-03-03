@@ -7,3 +7,12 @@ C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\obj\Debug\netstandard2.0\Core.dll
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\obj\Debug\netstandard2.0\Core.pdb
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\obj\Debug\netstandard2.0\Core.csprojAssemblyReference.cache
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.IdentityModel.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.Configuration.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.Web.ApplicationServices.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.Security.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.IdentityModel.xml
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.Configuration.xml
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.Web.ApplicationServices.xml
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\bin\Debug\netstandard2.0\System.Security.xml
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\Core\obj\Debug\netstandard2.0\Core.csproj.CopyComplete

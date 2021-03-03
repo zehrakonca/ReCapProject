@@ -74,3 +74,6 @@ C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreap
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreapp3.1\Autofac.Extras.DynamicProxy.dll
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreapp3.1\Castle.Core.dll
 C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreapp3.1\FluentValidation.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll
+C:\Users\zehra\source\repos\ReCapProject\ReCapProject\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
