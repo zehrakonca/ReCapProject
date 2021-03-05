@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Images\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 

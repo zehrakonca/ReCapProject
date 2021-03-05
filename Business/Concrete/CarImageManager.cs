@@ -23,8 +23,8 @@ namespace Business.Concrete
 		{
 			_carImageDal = carImageDal;
 		}
-		[SecuredOperation("Admin")]
-		[ValidationAspect(typeof(CarImageValidator))]
+		//[SecuredOperation("Admin")]
+		//[ValidationAspect(typeof(CarImageValidator))]
 		public IResult Add(IFormFile file, CarImage image)
 		{
 			IResult result = BusinessRules.Run(CheckImageLimit(image.CarID));
