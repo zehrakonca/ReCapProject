@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.11" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +15,6 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
-    <ProjectReference Include="..\WFUI\WFUI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

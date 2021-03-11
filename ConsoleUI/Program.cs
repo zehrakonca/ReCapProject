@@ -172,16 +172,16 @@ namespace ConsoleUI
 						RentDetail();
 						break;
 					case 15:
-						RentDetail();
-						Console.WriteLine("Teslim alınacak aracın ID'sini giriniz: ");
-						int carID = Convert.ToInt32(Console.ReadLine());
-						var returnedRental = rentalManager.GetRentCarDetails(R => R.RentalID == carID);
-						foreach (var rent in returnedRental.Data)
-						{
-							rental.ReturnDate = DateTime.Now;
-							Console.WriteLine(returnedRental.Message);
-						}
-						break;
+						//RentDetail();
+						//Console.WriteLine("Teslim alınacak aracın ID'sini giriniz: ");
+						//int carID = Convert.ToInt32(Console.ReadLine());
+						//var returnedRental = rentalManager.Get(R => R.RentalID == carID);
+						//foreach (var rent in returnedRental.Data)
+						//{
+						//	rental.ReturnDate = DateTime.Now;
+						//	Console.WriteLine(returnedRental.Message);
+						//}
+						//break;
 					case 16:
 						break;
 				}
@@ -437,16 +437,15 @@ namespace ConsoleUI
 		}
 		private static void RentDetail()
 		{
-			RentalManager rentalManager = new RentalManager(new EfRentDal());
-			Rental rental = new Rental();
-			var result = rentalManager.GetRentCarDetails();
-			Console.WriteLine("Kiralık verilmiş arabalar ve müşteri bilgileri :\nID\tAraba No\t" +
-							  "Kişi Adı\tKişi Soyadı\tTelefonu\tAlınan tarih\t\tTeslim tarihi");
-			foreach (var customer in result.Data)
-			{
-				Console.WriteLine($"{customer.RentID}\t{customer.CarID}\t\t{customer.UserName}\t\t" +
-								  $" {customer.UserSurname}\t\t{customer.UserTelephone}\t{customer.RentDate}\t{customer.ReturnDate}");
+			//RentalManager rentalManager = new RentalManager(new EfRentDal());
+			//Rental rental = new Rental();
+			//var result = rentalManager.GetRentCarDetails();
+			//Console.WriteLine("Kiralık verilmiş arabalar ve müşteri bilgileri :\nID\tAraba No\t" +
+			//				  "Kişi Adı\tKişi Soyadı\tTelefonu\tAlınan tarih\t\tTeslim tarihi");
+			//foreach (var customer in result.Data)
+			//{
+			//	Console.WriteLine($"{customer.RentID}\t{customer.CarID}\t\t{customer.UserName}\t\t" +
+			//					  $" {customer.UserSurname}\t\t{customer.UserTelephone}\t{customer.RentDate}\t{customer.ReturnDate}");
 			}
 		}
 	}
-}

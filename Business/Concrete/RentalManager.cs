@@ -1,60 +1,133 @@
 ﻿using Business.Abstract;
-using Business.BusinessAspect.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace Business.Concrete
 {
-	public class RentalManager : IRentService
-	{
-		IRentDal _rentDal;
-		public RentalManager(IRentDal rentDal)
-		{
-			_rentDal = rentDal;
-		}
-		[SecuredOperation("Admin Customer")]
-		[ValidationAspect(typeof(RentalValidator))]
-		public IResult Add(Rental rent)
-		{
-			_rentDal.Add(rent);
-			return new SuccessResult();
-		}
+    public class RentalManager : IRentService
+    {
+        private readonly IRentDal _rentalDal;
 
-		public IResult Delete(Rental rent)
-		{
-			_rentDal.Delete(rent);
-			return new SuccessResult();
-		}
+        public RentalManager(IRentDal rentalDal)
+        {
+            _rentalDal = rentalDal;
+        }
 
-		public IDataResult<Rental> GetByID(int id)
-		{
-			return new SuccessDataResult<Rental>(_rentDal.Get(r => r.RentalID == id));
-		}
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Add(Rental entity)
+        {
+            var result = BusinessRules.Run(WillLeasedCarAvailable(entity.CarID));
 
-		public IDataResult <List<CarRentDetailDto>> GetRentCarDetails(Expression<Func<Rental, bool>> filter = null)
-		{
-			return new SuccessDataResult<List<CarRentDetailDto>>(_rentDal.GetRentCarDetails());
-		}
+            if (result != null)
+            {
+                return result;
+            }
+            _rentalDal.Add(entity);
+            return new SuccessResult(Messages.CarAdded);
+        }
 
-		public IDataResult<List<Rental>> GetRentCar()
-		{
-			return new SuccessDataResult<List<Rental>>(_rentDal.GetAll());
-		}
+        public IResult Delete(Rental entity)
+        {
+            _rentalDal.Delete(entity);
+            return new SuccessResult(Messages.CarDeleted);
+        }
 
-		[ValidationAspect(typeof(RentalValidator))]
-		public IResult Update(Rental rent)
-		{
-			_rentDal.Update(rent);
-			return new SuccessResult();
-		}
-	}
+        public IDataResult<Rental> Get(int id)
+        {
+            Rental rental = _rentalDal.Get(p => p.RentalID == id);
+            if (rental == null)
+            {
+                return new ErrorDataResult<Rental>(Messages.ExceptionMessage);
+            }
+            else
+            {
+                return new SuccessDataResult<Rental>(rental, Messages.HasBeenListed);
+            }
+        }
+
+        public IDataResult<List<Rental>> GetAll()
+        {
+            List<Rental> rentals = _rentalDal.GetAll();
+            if (rentals.Count == 0)
+            {
+                return new ErrorDataResult<List<Rental>>(Messages.GetErrorRentalMessage);
+            }
+            else
+            {
+                return new SuccessDataResult<List<Rental>>(rentals, Messages.HasBeenListed);
+            }
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetAllRentalDetails()
+        {
+            List<RentalDetailDto> rentalDetailDtos = _rentalDal.GetAllRentalDetails();
+            if (rentalDetailDtos.Count > 0)
+                return new SuccessDataResult<List<RentalDetailDto>>(rentalDetailDtos, Messages.HasBeenListed);
+            else
+                return new ErrorDataResult<List<RentalDetailDto>>(Messages.ExceptionMessage);
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetAllUndeliveredRentalDetails()
+        {
+            List<RentalDetailDto> rentalDetailDtos = _rentalDal.GetAllRentalDetails(p => p.ReturnDate == null);
+            if (rentalDetailDtos.Count > 0)
+                return new SuccessDataResult<List<RentalDetailDto>>(rentalDetailDtos, Messages.HasBeenListed);
+            else
+                return new ErrorDataResult<List<RentalDetailDto>>(Messages.ExceptionMessage);
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetAllDeliveredRentalDetails()
+        {
+            List<RentalDetailDto> rentalDetailDtos = _rentalDal.GetAllRentalDetails(p => p.ReturnDate != null);
+            if (rentalDetailDtos.Count > 0)
+                return new SuccessDataResult<List<RentalDetailDto>>(rentalDetailDtos, Messages.HasBeenListed);
+            else
+                return new ErrorDataResult<List<RentalDetailDto>>(Messages.ExceptionMessage);
+        }
+
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Update(Rental entity)
+        {
+            _rentalDal.Update(entity);
+            return new SuccessResult(Messages.CarUpdated);
+        }
+
+        public IResult DeliverTheCar(Rental entity)
+        {
+            var result = BusinessRules.Run(CanARentalCarBeReturned(entity.RentalID));
+            if (result != null)
+            {
+                return result;
+            }
+            _rentalDal.Update(entity);
+            return new SuccessResult(Messages.CarDeliverTheCar);
+        }
+
+        #region RentalManager Business Rules
+
+        private IResult WillLeasedCarAvailable(int carId)
+        {
+            if (_rentalDal.Get(p => p.CarID == carId && p.ReturnDate == null) != null)
+                return new ErrorResult(Messages.ExceptionMessage);
+            else
+                return new SuccessResult();
+        }
+
+        private IResult CanARentalCarBeReturned(int carId)
+        {
+            if (_rentalDal.Get(p => p.CarID == carId && p.ReturnDate == null) == null)
+                return new ErrorResult(Messages.ExceptionMessage);
+            else
+                return new SuccessResult();
+        }
+
+        #endregion RentalManager Business Rules
+    }
 }

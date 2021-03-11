@@ -13,8 +13,12 @@ namespace Business.Abstract
 		IResult Add(Rental rent);
 		IResult Update(Rental rent);
 		IResult Delete(Rental rent);
-		IDataResult<List<Rental>> GetRentCar();
-		IDataResult<Rental> GetByID(int id);
-		IDataResult<List<CarRentDetailDto>> GetRentCarDetails(Expression<Func<Rental, bool>> filter = null);
+		IResult DeliverTheCar(Rental rent); //aracı teslim al.
+
+		IDataResult<List<RentalDetailDto>> GetAllRentalDetails(); //kiralanan kiralanmayan bütün araçlar
+		IDataResult<List<RentalDetailDto>> GetAllUndeliveredRentalDetails(); // teslim alınmayan araçlar
+		IDataResult<List<RentalDetailDto>> GetAllDeliveredRentalDetails(); // teslim alınan araçlar
+		IDataResult<List<Rental>> GetAll();
+		IDataResult<Rental> Get(int rentID);
 	}
 }

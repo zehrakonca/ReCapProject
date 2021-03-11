@@ -22,7 +22,7 @@ namespace Business.Concrete
 		{
 			_userDal = userDal;
 		}
-		[SecuredOperation("Admin")]
+		//[SecuredOperation("Admin")]
 		[ValidationAspect(typeof(UserValidator))]
 		public IResult Add(User user)
 		{
@@ -50,9 +50,9 @@ namespace Business.Concrete
 			return new DataResult<User>(_userDal.Get(u => u.UserID == userID), true);
 		}
 
-		public List<OperationClaim> GetClaims(User user)
+		public IDataResult<List<OperationClaim>> GetClaims(User user)
 		{
-			return _userDal.GetClaims(user);
+			return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
 		}
 
 		[ValidationAspect(typeof(UserValidator))]

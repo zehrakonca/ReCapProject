@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var result = _rentalService.GetRentCar();
+            var result = _rentalService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetByID")]
         public IActionResult GetById(int id)
         {
-            var result = _rentalService.GetByID(id);
+            var result = _rentalService.Get(id);
             if (result.Success)
             {
                 return Ok(result);

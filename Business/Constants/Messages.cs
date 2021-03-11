@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -44,5 +45,12 @@ namespace Business.Constants
 		public static string IncorrectPassword = "Parola yanlış";
 		public static string SuccessfulLogin = "Giriş başarılı";
 		public static string UserRegistered = "Kayıt başarılı";
+
+		public static List<CarImage> GetErrorCarMessage { get; internal set; }
+		public static string CarImageNotFound { get; internal set; }
+		public static string AboveImageAddingLimit { get; internal set; }
+		public static string EditCarImageMessage { get; internal set; }
+		public static List<Rental> GetErrorRentalMessage { get; internal set; }
+		public static string CarDeliverTheCar { get; internal set; }
 	}
 }

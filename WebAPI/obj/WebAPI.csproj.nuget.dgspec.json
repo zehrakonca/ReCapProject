@@ -360,9 +360,6 @@
               },
               "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Entities\\Entities.csproj": {
                 "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Entities\\Entities.csproj"
-              },
-              "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\WFUI\\WFUI.csproj": {
-                "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\WFUI\\WFUI.csproj"
               }
             }
           }
@@ -384,6 +381,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[3.1.12, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.11, )"
             }
           },
           "imports": [
@@ -406,34 +407,6 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
-      }
-    },
-    "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\WFUI\\WFUI.csproj": {
-      "restore": {
-        "projectUniqueName": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\WFUI\\WFUI.csproj",
-        "projectName": "WFUI",
-        "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\WFUI\\WFUI.csproj",
-        "frameworks": {
-          "net461": {
-            "projectReferences": {
-              "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Business\\Business.csproj": {
-                "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Business\\Business.csproj"
-              },
-              "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Core\\Core.csproj"
-              },
-              "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\DataAccess\\DataAccess.csproj"
-              },
-              "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\zehra\\source\\repos\\ReCapProject\\ReCapProject\\Entities\\Entities.csproj"
-              }
-            }
-          }
-        }
-      },
-      "frameworks": {
-        "net461": {}
       }
     }
   }

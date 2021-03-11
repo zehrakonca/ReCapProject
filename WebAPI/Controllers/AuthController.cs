@@ -1,56 +1,51 @@
 ﻿using Business.Abstract;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class AuthController : ControllerBase
-	{
-		IAuthService _authService;
-		public AuthController(IAuthService authService)
-		{
-			_authService = authService;
-		}
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
+    {
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
 
         [HttpPost("login")]
-        public ActionResult Login(UserLoginDto userForLoginDTO)
+        public IActionResult Login(UserLoginDto userForLoginDto)
         {
-            var userToLogin = _authService.Login(userForLoginDTO);
+            var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {
-                return BadRequest(userToLogin.Message);
+                return BadRequest(userToLogin);
             }
-            var tokenCheck = _authService.CreateAccessToken(userToLogin.Data);
-            if (tokenCheck.Success)
+
+            var result = _authService.CreateAccessToken(userToLogin.Data);
+            if (result.Success)
             {
-                return Ok(tokenCheck.Data); //üretilen token ın gösterilmesi gerek.
+                return Ok(result);
             }
-            return BadRequest(tokenCheck.Message);
+            return BadRequest(result);
         }
 
         [HttpPost("register")]
-        public ActionResult Register(UserRegisterDto userForRegisterDTO)
+        public IActionResult Register(UserRegisterDto userForRegisterDto)
         {
-            var userCheck = _authService.Exists(userForRegisterDTO.Email);
-            if (!userCheck.Success)
+            var userExists = _authService.UserExists(userForRegisterDto.Email);
+            if (!userExists.Success)
             {
-                return BadRequest(userCheck.Message);
+                return BadRequest(userExists);
             }
-            //böyle bir email yok ise kayıt islemine devam edebilir
-            var userToRegister = _authService.Register(userForRegisterDTO, userForRegisterDTO.Password);
-            var tokenCheck = _authService.CreateAccessToken(userToRegister.Data);
-            if (tokenCheck.Success)
+            var registerResult = _authService.Register(userForRegisterDto);
+            if (registerResult.Success)
             {
-                return Ok(tokenCheck.Data);
+                return Ok(registerResult);
             }
-            return BadRequest(tokenCheck.Message);
+            return BadRequest(registerResult);
         }
     }
 }
