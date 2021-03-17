@@ -1,8 +1,14 @@
+//Created By Engin Yenice
+//enginyenice2626@gmail.com
+
+/*Created By Engin Yenice
+enginyenice2626@gmail.com*/
+
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
-using Core.Utilities.Security.JWT;
+using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -58,8 +64,8 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-			app.UseCors(builder => builder.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin());
-			app.UseHttpsRedirection();
+            app.UseCors(builder => builder.WithOrigins("http://localhost:5001/").AllowAnyHeader().AllowAnyOrigin());
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
